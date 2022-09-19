@@ -1,0 +1,19 @@
+{
+    "name": "t.mesha15/melotec",
+    "description": "Awesome start plugin example",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Matheus Melo",
+            "email": "matheusroberttjmelo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "./inc"
+        }
+    }
+}
