@@ -5,29 +5,44 @@
 
 namespace Inc\Pages;
 
-use \Inc\Base\BaseController;
 use \Inc\Api\SettingsApi;
+use \Inc\Base\BaseController;
+use \Inc\Api\Callbacks\AdminCallbacks;
 
 class Admin extends BaseController {
 
     public $settings;
+    public $callbacks;
     public $pages = array();
     public $subpages = array();
 
-    public function __construct()
-    {
+    public function register(){
         $this->settings = new SettingsApi();
+
+        $this->callbacks = new AdminCallbacks();
+
+        $this->setPages();
+        
+        $this->setSubPages();
+
+        $this->settings->addPages($this->pages)->withSubPage('Dashboard')->addSubPages($this->subpages)->register();
+    }
+
+    public function setPages(){
         $this->pages = [
             [
                 'page_title' => 'MeloTec',
                 'menu_title' => 'MeloTec', 
                 'capability' => 'manage_options', 
                 'menu_slug'  => 'melotec', 
-                'callback'   => function (){echo '<h1>MeloTec</h1>';}, 
+                'callback'   => [$this->callbacks, 'dashboard'], 
                 'icon_url'   => 'dashicons-store', 
                 'position'   => 110
             ]
         ];
+    }
+
+    public function setSubPages(){
         $this->subpages = [
             [
                 'parent_slug' => 'melotec',
@@ -35,7 +50,7 @@ class Admin extends BaseController {
                 'menu_title'  => 'CPT', 
                 'capability'  => 'manage_options', 
                 'menu_slug'   => 'melotec_cpt', 
-                'callback'    => function (){echo '<h1>CPT Manager</h1>';}, 
+                'callback'    => [$this->callbacks, 'customPostTypes'], 
             ],
             [
                 'parent_slug' => 'melotec',
@@ -43,7 +58,7 @@ class Admin extends BaseController {
                 'menu_title'  => 'Taxomonies', 
                 'capability'  => 'manage_options', 
                 'menu_slug'   => 'melotec_taxonomies', 
-                'callback'    => function (){echo '<h1>Taxonomies Manager</h1>';}, 
+                'callback'    => [$this->callbacks, 'taxonomies'], 
             ],
             [
                 'parent_slug' => 'melotec',
@@ -51,12 +66,19 @@ class Admin extends BaseController {
                 'menu_title'  => 'Widgets', 
                 'capability'  => 'manage_options', 
                 'menu_slug'   => 'melotec_widgets', 
-                'callback'    => function (){echo '<h1>Widgets Manager</h1>';}, 
+                'callback'    => [$this->callbacks, 'widgets'], 
             ]
         ];
     }
 
-    public function register(){
-        $this->settings->add_pages($this->pages)->withSubPage('Dashboard')->add_sub_pages($this->subpages)->register();
+    public function setSettings()
+    {
+        $args = [
+            [
+                'option_group' => 'melotec_options_group',
+                'option_name'  => 'text_example',
+                'callback'     => [$this->callbacks, 'melotecOptionsGroup']
+            ]
+        ];
     }
 }
