@@ -44,7 +44,7 @@ class TestimonialController extends BaseController
                 'page_title'  => 'Testimonial',
                 'menu_title'  => 'Testimonial Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_testimonial', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

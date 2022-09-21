@@ -44,7 +44,7 @@ class MembershipController extends BaseController
                 'page_title'  => 'Membership',
                 'menu_title'  => 'Membership Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_membership', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

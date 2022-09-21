@@ -44,7 +44,7 @@ class WidgetController extends BaseController
                 'page_title'  => 'Widgets',
                 'menu_title'  => 'Widgets Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_widget', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

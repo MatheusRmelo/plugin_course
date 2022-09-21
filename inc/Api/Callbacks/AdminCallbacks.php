@@ -25,14 +25,6 @@ class AdminCallbacks extends BaseController
         return require_once("$this->plugin_path/templates/widgets.php");
     }
 
-    // public function checkboxSanitize($input){
-    //     return $input;
-    // }
-
-    // public function melotecAdminSection(){
-    //     echo 'Check this beatutiful section';
-    // }
-
     public function melotecTextExample(){
         $value = esc_attr(get_option('text_example'));
         echo '<input type="text" class="regular-text" name="text_example" value="'.$value.'" placeholder="Write something here..." />';

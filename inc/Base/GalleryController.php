@@ -44,7 +44,7 @@ class GalleryController extends BaseController
                 'page_title'  => 'Gallery',
                 'menu_title'  => 'Gallery Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_gallery', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

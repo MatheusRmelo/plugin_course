@@ -44,7 +44,7 @@ class ChatController extends BaseController
                 'page_title'  => 'Chat',
                 'menu_title'  => 'Chat Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_chat', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

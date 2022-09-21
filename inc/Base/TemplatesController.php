@@ -44,7 +44,7 @@ class TemplatesController extends BaseController
                 'page_title'  => 'Templates',
                 'menu_title'  => 'Templates Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_templates', 
                 'callback'    => [$this->callbacks, 'widgets'], 
             ],
         ];

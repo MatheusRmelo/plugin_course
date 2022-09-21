@@ -44,7 +44,7 @@ class TaxonomyController extends BaseController
                 'page_title'  => 'Taxonomy',
                 'menu_title'  => 'Taxonomy Manager', 
                 'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
+                'menu_slug'   => 'melotec_taxonomy', 
                 'callback'    => [$this->callbacks, 'taxonomies'], 
             ],
         ];
