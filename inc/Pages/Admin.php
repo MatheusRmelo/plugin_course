@@ -86,17 +86,9 @@ class Admin extends BaseController {
             [
                 'option_group' => 'melotec_settings',
                 'option_name'  => 'melotec',
-                'callback'     => [$this->callbacks, 'checkboxSanitize']
+                'callback'     => [$this->callbacks_mngr, 'checkboxSanitize']
             ]
         ];
-
-        // foreach ($this->managers as $key => $value) {
-        //     $args[] = [
-        //         'option_group' => 'melotec_settings',
-        //         'option_name'  => $key,
-        //         'callback'     => [$this->callbacks, 'checkboxSanitize']
-        //     ];
-        // }
 
         $this->settings->setSettings($args);
     }
