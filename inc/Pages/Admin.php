@@ -8,11 +8,13 @@ namespace Inc\Pages;
 use \Inc\Api\SettingsApi;
 use \Inc\Base\BaseController;
 use \Inc\Api\Callbacks\AdminCallbacks;
+use Inc\Api\Callbacks\ManagerCallbacks;
 
 class Admin extends BaseController {
 
     public $settings;
     public $callbacks;
+    public $callbacks_mngr;
     public $pages = array();
     public $subpages = array();
 
@@ -20,10 +22,17 @@ class Admin extends BaseController {
         $this->settings = new SettingsApi();
 
         $this->callbacks = new AdminCallbacks();
+        $this->callbacks_mngr = new ManagerCallbacks();
 
         $this->setPages();
         
         $this->setSubPages();
+
+        $this->setSettings();
+
+        $this->setSections();
+
+        $this->setFields();
 
         $this->settings->addPages($this->pages)->withSubPage('Dashboard')->addSubPages($this->subpages)->register();
     }
@@ -72,13 +81,59 @@ class Admin extends BaseController {
     }
 
     public function setSettings()
+    {   
+        $args = [
+            [
+                'option_group' => 'melotec_settings',
+                'option_name'  => 'melotec',
+                'callback'     => [$this->callbacks, 'checkboxSanitize']
+            ]
+        ];
+
+        // foreach ($this->managers as $key => $value) {
+        //     $args[] = [
+        //         'option_group' => 'melotec_settings',
+        //         'option_name'  => $key,
+        //         'callback'     => [$this->callbacks, 'checkboxSanitize']
+        //     ];
+        // }
+
+        $this->settings->setSettings($args);
+    }
+
+    public function setSections()
     {
         $args = [
             [
-                'option_group' => 'melotec_options_group',
-                'option_name'  => 'text_example',
-                'callback'     => [$this->callbacks, 'melotecOptionsGroup']
+                'id'       => 'melotec_admin_index',
+                'title'    => 'Settings Manager',
+                'callback' => [$this->callbacks_mngr, 'adminSectionManager'],
+                'page'     => 'melotec'
             ]
         ];
+
+        $this->settings->setSections($args);
+    }
+
+    public function setFields()
+    {
+        $args = [];
+
+        foreach ($this->managers as $key => $value) {
+            $args[] = [
+                'id'       => $key,
+                'title'    => $value,
+                'callback' => [$this->callbacks_mngr, 'checkboxField'],
+                'page'     => 'melotec',
+                'section'  => 'melotec_admin_index',
+                'args'     => [
+                    'option_name' => 'melotec',
+                    'label_for'   => $key,
+                    'class'       => 'ui-toggle'
+                ]
+            ];
+        }
+
+        $this->settings->setFields($args);
     }
 }
