@@ -10,13 +10,13 @@ use \Inc\Base\BaseController;
 use \Inc\Api\Callbacks\AdminCallbacks;
 use Inc\Api\Callbacks\ManagerCallbacks;
 
-class Admin extends BaseController {
+class Dashboard extends BaseController {
 
     public $settings;
     public $callbacks;
     public $callbacks_mngr;
     public $pages = array();
-    public $subpages = array();
+    //public $subpages = array();
 
     public function register(){
         $this->settings = new SettingsApi();
@@ -26,15 +26,13 @@ class Admin extends BaseController {
 
         $this->setPages();
         
-        $this->setSubPages();
-
         $this->setSettings();
 
         $this->setSections();
 
         $this->setFields();
 
-        $this->settings->addPages($this->pages)->withSubPage('Dashboard')->addSubPages($this->subpages)->register();
+        $this->settings->addPages($this->pages)->withSubPage('Dashboard')->register();
     }
 
     public function setPages(){
@@ -47,35 +45,6 @@ class Admin extends BaseController {
                 'callback'   => [$this->callbacks, 'dashboard'], 
                 'icon_url'   => 'dashicons-store', 
                 'position'   => 110
-            ]
-        ];
-    }
-
-    public function setSubPages(){
-        $this->subpages = [
-            [
-                'parent_slug' => 'melotec',
-                'page_title'  => 'Custom Post Types',
-                'menu_title'  => 'CPT', 
-                'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_cpt', 
-                'callback'    => [$this->callbacks, 'customPostTypes'], 
-            ],
-            [
-                'parent_slug' => 'melotec',
-                'page_title'  => 'Custom Taxonomies',
-                'menu_title'  => 'Taxomonies', 
-                'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_taxonomies', 
-                'callback'    => [$this->callbacks, 'taxonomies'], 
-            ],
-            [
-                'parent_slug' => 'melotec',
-                'page_title'  => 'Custom Widgets',
-                'menu_title'  => 'Widgets', 
-                'capability'  => 'manage_options', 
-                'menu_slug'   => 'melotec_widgets', 
-                'callback'    => [$this->callbacks, 'widgets'], 
             ]
         ];
     }
