@@ -27,9 +27,7 @@ class Dashboard extends BaseController {
         $this->setPages();
         
         $this->setSettings();
-
         $this->setSections();
-
         $this->setFields();
 
         $this->settings->addPages($this->pages)->withSubPage('Dashboard')->register();

@@ -12,7 +12,8 @@ class Enqueue extends BaseController {
     }
 
     public function enqueue(){
-        wp_enqueue_style('melotec_style',   $this->plugin_url.'assets/style.css', );
+        wp_enqueue_style('melotec_style',   $this->plugin_url.'assets/style.css');
+        wp_enqueue_style('melotec_cpt_table',   $this->plugin_url.'assets/table.css');
         wp_enqueue_script('melotec_script', $this->plugin_url.'assets/script.js');
     }
 }

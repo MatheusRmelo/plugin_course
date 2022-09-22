@@ -9,11 +9,14 @@ class Activate{
     public static function activate(){
         flush_rewrite_rules();
 
-        if(get_option('melotec')){
-            return;
+        $default = [];
+        
+        if(!get_option('melotec')){
+            update_option('melotec', $default);
         }
 
-        $default = [];
-        update_option('melotec', $default);
+        if(!get_option('melotec_cpt')){
+            update_option('melotec_cpt', $default);
+        }
     }
 }
