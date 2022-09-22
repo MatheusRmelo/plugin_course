@@ -3,11 +3,11 @@
     <?php settings_errors(); ?>
 
     <ul class="nav nav-tabs">
-        <li class="active">
+        <li class="<?= !isset($_POST['edit_post']) ? 'active' : '' ?>">
             <a href="#tab-1">Your Custom Post Types</a>
         </li>
-        <li>
-            <a href="#tab-2">Add Custom Post Type</a>
+        <li class="<?= isset($_POST['edit_post']) ? 'active' : '' ?>">
+            <a href="#tab-2"><?= isset($_POST['edit_post']) ? 'Edit' : 'Add' ?> Custom Post Type</a>
         </li>
         <li>
             <a href="#tab-3">Export</a>
@@ -15,7 +15,7 @@
     </ul>
 
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane active">
+        <div id="tab-1" class="tab-pane <?= !isset($_POST['edit_post']) ? 'active' : '' ?>">
             <h3>Manager your Custom Post Types</h3>
             <table class="cpt-table">
                 <thead>
@@ -43,13 +43,30 @@
                                 <td><?= $option['plural_name'] ?></td>
                                 <td><?= $public == 1 ? 'yes' : 'no' ?></td>
                                 <td><?= $has_archive == 1 ? 'yes' : 'no' ?></td>
-                                <td><a href="\#">EDIT</a> - <a href="\#">DELETE</a></td>
+                                <td>
+                                    <form method="post" action="" class="inline-block">
+                                        <?php 
+                                            settings_fields('melotec_cpt_settings');
+                                            echo '<input type="hidden" name="edit_post" value="'.$option['post_type'].'">';
+                                            submit_button('Edit', 'primary small', 'submit', false);
+                                        ?>
+                                    </form>
+                                    <form method="post" action="options.php" class="inline-block">
+                                        <?php 
+                                            settings_fields('melotec_cpt_settings');
+                                            echo '<input type="hidden" name="remove" value="'.$option['post_type'].'">';
+                                            submit_button('Delete', 'delete small', 'submit', false, [
+                                                'onclick'=> 'return confirm("Are you sure you want to delete '.$option['post_type'].'? The data associated with it will not be deleted.");'
+                                            ]);
+                                        ?>
+                                    </form>
+                                </td>
                             </tr>
                     <?php endforeach; ?> 
                 </tbody>
             </table>
         </div>
-        <div id="tab-2" class="tab-pane">
+        <div id="tab-2" class="tab-pane <?= isset($_POST['edit_post']) ? 'active' : '' ?>">
             <form method="post" action="options.php">
                 <?php 
                     settings_fields('melotec_cpt_settings');

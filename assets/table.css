@@ -15,3 +15,8 @@
 .cpt-table td {
 	text-align: center;
 }
+
+.inline-block {
+    display: inline-block;
+    margin-right: 8px;
+}

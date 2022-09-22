@@ -16,6 +16,12 @@ class CPTCallbacks
     {
         $output = get_option('melotec_cpt');
 
+        if(isset($_POST['remove'])){
+            unset($output[$_POST['remove']]);
+            
+            return $output;
+        }
+
         if(count($output) == 0){
             $output[$input['post_type']] = $input;
 
@@ -38,8 +44,12 @@ class CPTCallbacks
         $name = $args['label_for'];
         $option_name = $args['option_name'];
         $placeholder = $args['placeholder'];
-        $input = get_option($option_name);
-        $value = $input[$name] ?? '';
+        $value = '';
+
+        if(isset($_POST['edit_post'])){
+            $input = get_option($option_name);
+            $value = $input[$_POST['edit_post']][$name];
+        }
 
         echo '<input type="text" class="regular-text" name="'.$option_name.'['.$name.']'.'" id="'.$name.'" 
          value="'.$value.'" placeholder="'.$placeholder.'" required/>';
@@ -50,10 +60,15 @@ class CPTCallbacks
         $name = $args['label_for'];
         $classes = $args['class'];
         $option_name = $args['option_name'];
-        $checkbox = get_option($option_name);
+        $checked = false;
+
+        if(isset($_POST['edit_post'])){
+            $checkbox = get_option($option_name);
+            $checked = $checkbox[$_POST['edit_post']][$name] ?? false;
+        }
 
         echo '<div class="'.$classes.'"><input id="'.$name.'" 
             type="checkbox" name="'.$option_name.'['.$name.']'.'" 
-            value="1" '.($checkbox[$name] ?? false ? 'checked' : '').' /><label for="'.$name.'"><div></div></label></div>';
+            value="1" '.($checked ? 'checked' : '').' /><label for="'.$name.'"><div></div></label></div>';
     }
 }
